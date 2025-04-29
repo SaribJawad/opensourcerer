@@ -3,7 +3,14 @@ import RepositoryHeader from "../_components/RepositoryHeader";
 import RepoInfo from "../_components/RepoInfo";
 import RepositoryNavigationSection from "../_components/RepositoryNavigationSection";
 
-export default function RepositoryPage({ params }: { params: { id: string } }) {
+export default async function RepositoryPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const id = await params;
+  console.log(id);
+
   const projectData = {
     id: "1",
     name: "next.js",
@@ -77,7 +84,7 @@ export default function RepositoryPage({ params }: { params: { id: string } }) {
       activityScore: 87, // out of 100
     },
   };
-  console.log(params.id);
+
   return (
     <section className="pt-20 h-full  w-full p-5 bg-background">
       <div className="max-w-[1400px] mx-auto flex flex-col gap-5">

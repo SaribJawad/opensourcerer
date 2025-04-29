@@ -1,7 +1,6 @@
 import React from "react";
 import ProfileSection from "./_components/ProfileSection";
 import RepositoryCard from "@/app/_components/RepositoryCard";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 function page() {
   const savedProjects = [

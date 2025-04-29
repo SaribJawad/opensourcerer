@@ -5,6 +5,7 @@ import RepositoryCard from "./RepositoryCard";
 function TrendingSection() {
   const trendingRepos = [
     {
+      id: "1",
       image: "/logo.svg",
       repoName: "vercel/next.js",
       desc: "The React Framework for the Web",
@@ -15,6 +16,7 @@ function TrendingSection() {
       updated: 2,
     },
     {
+      id: "2",
       image: "/logo.svg",
       repoName: "facebook/react",
       desc: "A declarative, efficient, and flexible JavaScript library for building user interfaces.",
@@ -26,6 +28,7 @@ function TrendingSection() {
     },
     {
       image: "/logo.svg",
+      id: "3",
       repoName: "tensorflow/tensorflow",
       desc: "An open source machine learning framework for everyone",
       tags: ["machine-learning", "ai", "data-science"],
