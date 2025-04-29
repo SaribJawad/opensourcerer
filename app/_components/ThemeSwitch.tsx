@@ -4,6 +4,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { GoSun } from "react-icons/go";
 import { IoMoonOutline } from "react-icons/io5";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 function ThemeSwitch() {
   const [mounted, setMoundted] = useState<boolean>(false);
@@ -12,7 +13,7 @@ function ThemeSwitch() {
   useEffect(() => setMoundted(true), []);
 
   if (!mounted) {
-    return <h1>loading</h1>;
+    return <LoadingSpinner />;
   }
 
   let icon;

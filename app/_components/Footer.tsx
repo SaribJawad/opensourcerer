@@ -44,7 +44,7 @@ function Footer() {
   ];
 
   return (
-    <footer className="w-full  bg-background p-3 ">
+    <footer className="w-full bg-background p-3 border-t border-border">
       <div className="max-w-[1400px]  py-16 mx-auto grid lg:grid-cols-4 grid-cols-1 gap-4 border-b border-border">
         <div className="flex flex-col gap-2">
           <Logo />
@@ -60,7 +60,7 @@ function Footer() {
               <Link
                 href={nav.link}
                 key={nav.title}
-                className="hover:text-white color-hover"
+                className="hover:text-foreground color-hover"
               >
                 <li>{nav.title}</li>
               </Link>
@@ -75,7 +75,7 @@ function Footer() {
               <Link
                 href={resource.link}
                 key={resource.title}
-                className="hover:text-white color-hover"
+                className="hover:text-foreground color-hover"
               >
                 <li>{resource.title}</li>
               </Link>
@@ -90,7 +90,7 @@ function Footer() {
               <Link
                 href={legal.link}
                 key={legal.title}
-                className="hover:text-white color-hover"
+                className="hover:text-foreground color-hover"
               >
                 <li>{legal.title}</li>
               </Link>

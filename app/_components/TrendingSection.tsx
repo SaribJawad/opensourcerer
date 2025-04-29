@@ -40,12 +40,12 @@ function TrendingSection() {
     <section className="w-full p-5">
       <div className="max-w-[1400px] mx-auto py-20 flex flex-col gap-10">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-semibold">
+          <h1 className="md:text-3xl text-2xl font-semibold">
             Trending <span className="text-accent">Projects</span>
           </h1>
           <Link
             href="/"
-            className="text-accent flex items-center gap-1 hover:underline hover:text-accent/90 color-hover"
+            className="text-accent flex items-center gap-1 hover:underline hover:text-accent/90 color-hover md:text-base text-sm"
           >
             View all
             <GoArrowUpRight />
