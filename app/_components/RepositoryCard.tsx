@@ -20,7 +20,7 @@ interface IRepositoryCardProps {
 
 function RepositoryCard(props: IRepositoryCardProps) {
   return (
-    <div className="border border-border bg-background/50 rounded-custom p-5 flex flex-col justify-between gap-4 shadow-sm hover:shadow-lg transition-all duration-300">
+    <div className="border border-border bg-secondary/30 rounded-custom p-5 flex flex-col justify-between gap-4 shadow-sm hover:shadow-lg transition-all duration-300">
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-3">
           <Image src={"/logo.svg"} alt="repo-img" width={25} height={25} />

@@ -7,8 +7,22 @@ import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
+import { useUserStore } from "../_providers/userStoreProvider";
+import Image from "next/image";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { signOut } from "next-auth/react";
 
 function Header() {
+  const user = useUserStore((state) => state.user);
+
   const [isMobileNavOpen, setIsMobileNavOpen] = useState<boolean>(false);
   const [isNavVisible, setIsNavVisible] = useState<boolean>(false);
 
@@ -38,15 +52,53 @@ function Header() {
               <Button variant="ghost">Explore</Button>
             </Link>
 
-            <Link href="/dashboard">
-              <Button variant="ghost">Dashboard</Button>
-            </Link>
+            {user && (
+              <Link href="/dashboard">
+                <Button variant="ghost">Dashboard</Button>
+              </Link>
+            )}
           </div>
           <ThemeSwitch />
-          <Link href="/login">
-            <Button variant="outline">Login</Button>
-          </Link>
-          <Button className="md:block hidden">Register</Button>
+          {!user ? (
+            <>
+              <Link href="/login">
+                <Button variant="outline">Login</Button>
+              </Link>
+              <Link href="/register">
+                <Button className="md:block hidden">Register</Button>
+              </Link>
+            </>
+          ) : (
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Link href="/dashboard">
+                  <div className="border cursor-pointer border-border w-9 h-9 rounded-full overflow-hidden relative">
+                    <Image
+                      src={
+                        user?.profileImage !== ""
+                          ? user.profileImage!
+                          : "/default-pfp.jpeg"
+                      }
+                      alt="profile-img"
+                      fill
+                      sizes="36px"
+                      className="object-cover"
+                    />
+                  </div>
+                </Link>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link href="/dashboard">Dashboard</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => signOut()}>
+                  Sign out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
           <Button
             onClick={() => setIsMobileNavOpen((prev) => !prev)}
             className="md:hidden block cursor-pointer"
@@ -84,9 +136,15 @@ function Header() {
                       Explore
                     </Button>
                   </Link>
-                  <Button variant="outline">Dashboard</Button>
+                  <Link href="/dashboard">
+                    <Button variant="outline">Dashboard</Button>
+                  </Link>
                 </div>
-                <Button className="">Register</Button>
+                {!user && (
+                  <Link href="/register">
+                    <Button className="">Register</Button>
+                  </Link>
+                )}
               </div>
             </div>
           </nav>

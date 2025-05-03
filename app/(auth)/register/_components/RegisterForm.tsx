@@ -1,5 +1,6 @@
 "use client";
 
+import { LoadingSpinner } from "@/app/_components/LoadingSpinner";
 import { Button } from "@/app/_components/ui/button";
 import {
   Form,
@@ -13,7 +14,10 @@ import {
 import { Input } from "@/app/_components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { z } from "zod";
 
 const FormSchema = z.object({
@@ -26,6 +30,8 @@ const FormSchema = z.object({
 });
 
 function RegisterForm() {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -35,8 +41,30 @@ function RegisterForm() {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    console.log(data);
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Application-Type": "application/json",
+        },
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        toast.success("Account created! Login to get started");
+        router.push("/login");
+      } else {
+        toast.error(responseData.message);
+      }
+    } catch (error) {
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -53,7 +81,11 @@ function RegisterForm() {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Jhon doe" {...field} />
+                  <Input
+                    disabled={isLoading}
+                    placeholder="Jhon doe"
+                    {...field}
+                  />
                 </FormControl>
 
                 <FormMessage />
@@ -67,7 +99,11 @@ function RegisterForm() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="you@example.com" {...field} />
+                  <Input
+                    disabled={isLoading}
+                    placeholder="you@example.com"
+                    {...field}
+                  />
                 </FormControl>
 
                 <FormMessage />
@@ -83,7 +119,12 @@ function RegisterForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="••••••••" {...field} />
+                <Input
+                  disabled={isLoading}
+                  type="password"
+                  placeholder="••••••••"
+                  {...field}
+                />
               </FormControl>
               <FormDescription className="text-xs">
                 Password must be at least 8 characters long.
@@ -91,7 +132,9 @@ function RegisterForm() {
             </FormItem>
           )}
         />
-        <Button className="mt-3">Create account</Button>
+        <Button disabled={isLoading} className="mt-3">
+          {isLoading ? <LoadingSpinner /> : "Register"}
+        </Button>
         <div className="self-center text-sm">
           <h4>
             Already have an account?{" "}

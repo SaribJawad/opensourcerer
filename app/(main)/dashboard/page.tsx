@@ -39,25 +39,7 @@ function page() {
       <div className="max-w-[1400px] mx-auto flex  gap-10 h-full lg:flex-row flex-col-reverse">
         <div className="flex-3 flex flex-col text-xl font-semibold gap-6  ">
           Projects
-          <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 max-h-dvh overflow-auto  ">
-            {savedProjects.map((proj) => (
-              <RepositoryCard key={proj.id} {...proj} />
-            ))}
-            {savedProjects.map((proj) => (
-              <RepositoryCard key={proj.id} {...proj} />
-            ))}
-            {savedProjects.map((proj) => (
-              <RepositoryCard key={proj.id} {...proj} />
-            ))}
-            {savedProjects.map((proj) => (
-              <RepositoryCard key={proj.id} {...proj} />
-            ))}
-            {savedProjects.map((proj) => (
-              <RepositoryCard key={proj.id} {...proj} />
-            ))}
-            {savedProjects.map((proj) => (
-              <RepositoryCard key={proj.id} {...proj} />
-            ))}
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-4 max-h-dvh overflow-auto  pb-2">
             {savedProjects.map((proj) => (
               <RepositoryCard key={proj.id} {...proj} />
             ))}

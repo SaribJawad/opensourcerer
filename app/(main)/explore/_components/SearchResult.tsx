@@ -100,6 +100,7 @@ function SearchResult({ setIsSideBarOpen, isSideBarOpen }: SearchResultProps) {
         <CiFilter />
         Filters
       </Button>
+
       <div className="grid md:grid-cols-2 grid-col-1 gap-6 max-h-dvh overflow-auto pb-2">
         {mockProjects.map((proj) => (
           <RepositoryCard key={proj.id} {...proj} />

@@ -1,11 +1,9 @@
 import Divider from "@/app/_components/Divider";
 import Logo from "@/app/_components/Logo";
-import { Button } from "@/app/_components/ui/button";
 import Link from "next/link";
-import { FaGithub } from "react-icons/fa";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
-import { FcGoogle } from "react-icons/fc";
 import RegisterForm from "./_components/RegisterForm";
+import RegisterOauthButtons from "./_components/RegisterOauthButtons";
 
 function page() {
   return (
@@ -24,24 +22,7 @@ function page() {
         </div>
         {/* login btns & forms */}
         <div className="flex flex-col gap-5 items-center w-full">
-          <div className="flex flex-col w-full items-center gap-2 ">
-            <Button
-              variant="outline"
-              size="lg"
-              className="w-full flex items-center gap-3"
-            >
-              <FcGoogle />
-              Continue with Google
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="w-full flex items-center gap-3"
-            >
-              <FaGithub />
-              Continue with Github
-            </Button>
-          </div>
+          <RegisterOauthButtons />
 
           <Divider>OR CONTINUE WITH EMAIL</Divider>
           <RegisterForm />

@@ -1,3 +1,5 @@
+"use client";
+
 import Divider from "@/app/_components/Divider";
 import Logo from "@/app/_components/Logo";
 import { Button } from "@/app/_components/ui/button";
@@ -6,8 +8,29 @@ import { FaGithub } from "react-icons/fa";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import LoginForm from "../_components/LoginForm";
 import { FcGoogle } from "react-icons/fc";
+import { signIn } from "next-auth/react";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import { useRouter, useSearchParams } from "next/navigation";
 
-function page() {
+function LoginPage() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const error = searchParams.get("error") || null;
+
+  useEffect(() => {
+    if (error === "AccountExistsWithCredentials") {
+      toast.error("Account already exists! Login with email and password.", {
+        id: "account-exists",
+      });
+    }
+
+    const newUrl = window.location.pathname;
+
+    router.replace(newUrl);
+  }, []);
+
   return (
     <section className="bg-background   h-dvh flex items-center justify-center p-4">
       <div className=" max-w-[420px] w-full  flex flex-col gap-10  items-center">
@@ -26,6 +49,7 @@ function page() {
         <div className="flex flex-col gap-5 items-center w-full">
           <div className="flex flex-col  w-full items-center gap-2 ">
             <Button
+              onClick={() => signIn("google")}
               variant="outline"
               size="lg"
               className="w-full flex items-center gap-3"
@@ -34,6 +58,7 @@ function page() {
               Continue with Google
             </Button>
             <Button
+              onClick={() => signIn("github")}
               variant="outline"
               size="lg"
               className="w-full flex items-center gap-3"
@@ -51,4 +76,4 @@ function page() {
   );
 }
 
-export default page;
+export default LoginPage;
