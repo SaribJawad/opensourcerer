@@ -31,7 +31,7 @@ function BookmarkedReposSection() {
     queryKey: ["bookmarkedRepos"],
     queryFn: async () => {
       const res = await fetch(
-        "http://localhost:3000/api/user/get-bookmarked-repos",
+        "https://opensourcerer.vercel.app/api/user/get-bookmarked-repos",
         {
           method: "GET",
         }
