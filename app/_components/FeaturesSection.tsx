@@ -2,24 +2,12 @@ import { BiMessageSquareDetail } from "react-icons/bi";
 import { FaSearch } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 
-
-
-
-
-
-
-
-
-
-
-
-
 function FeaturesSection() {
   const features = [
     {
       icon: <FaSearch size={23} />,
       title: "Smart Search",
-      desc: "Find the perfect project with powerful filters for language, stars, and activity level.",
+      desc: "Find the perfect project with powerful filters for language, stars etc.",
     },
     {
       icon: <FiHeart size={23} />,
@@ -29,7 +17,7 @@ function FeaturesSection() {
     {
       icon: <BiMessageSquareDetail size={23} />,
       title: "Detailed Insights",
-      desc: "Get comprehensive analytics about project activity and maintainer responsiveness.",
+      desc: "Get details about project.",
     },
   ];
 

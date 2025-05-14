@@ -1,6 +1,7 @@
 import { authOptions } from "@/lib/auth";
 import { BookmarkRepo } from "@/models/bookmarkRepo.model";
 import { User } from "@/models/user.model";
+import connectDB from "@/utils/connectDB";
 import { Types } from "mongoose";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
@@ -13,9 +14,9 @@ export async function POST(
     params: Promise<{ repoId: string }>;
   }
 ) {
-  console.log(params);
+  connectDB();
   const { repoId } = await params;
-  console.log(repoId);
+
   const session = await getServerSession(authOptions);
 
   if (!session) {

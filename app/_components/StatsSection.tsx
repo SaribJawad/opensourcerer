@@ -8,7 +8,7 @@ function StatsSection() {
       icon: <LuUsers size={23} />,
       number: "10,000+",
       title: "Active Contributors",
-      desc: "Join our thriving community of open source developers",
+      desc: "Join community of open source developers",
     },
     {
       icon: <FaRegStar size={23} />,
