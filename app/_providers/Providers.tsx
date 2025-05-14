@@ -7,6 +7,8 @@ import React from "react";
 import { UserStoreProvider } from "./userStoreProvider";
 import LoadingOverlay from "./LoadingOverlay";
 import { ToasterWithMax } from "./ToasterWithMax";
+import { RepoStoreProvider } from "./repoStoreProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 interface ProvidersProps {
   session: Session;
@@ -14,15 +16,20 @@ interface ProvidersProps {
 }
 
 function Providers({ children, session }: ProvidersProps) {
+  const queryClient = new QueryClient();
   return (
     <SessionProvider session={session}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <UserStoreProvider>
-          <LoadingOverlay>
-            <ToasterWithMax />
-            {children}
-          </LoadingOverlay>
-        </UserStoreProvider>
+        <QueryClientProvider client={queryClient}>
+          <UserStoreProvider>
+            <RepoStoreProvider>
+              <LoadingOverlay>
+                <ToasterWithMax />
+                {children}
+              </LoadingOverlay>
+            </RepoStoreProvider>
+          </UserStoreProvider>
+        </QueryClientProvider>
       </ThemeProvider>
     </SessionProvider>
   );

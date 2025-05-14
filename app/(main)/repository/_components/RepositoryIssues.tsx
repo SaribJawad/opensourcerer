@@ -3,18 +3,17 @@ import { Button } from "@/app/_components/ui/button";
 import Link from "next/link";
 
 interface RepositoryIssuesProps {
+  githubLink: string;
   issues: {
-    id: string;
+    issuesUrl: string;
     title: string;
-    labels: string[];
-    commentsCount: number;
-    createdAt: string;
+    labels: { name: string; color: string }[];
   }[];
 }
 
-function RepositoryIssues({ issues }: RepositoryIssuesProps) {
+function RepositoryIssues({ issues, githubLink }: RepositoryIssuesProps) {
   return (
-    <section className=" border border-border  bg-secondary/30 rounded-custom">
+    <section className=" border border-border lg:col-span-2  bg-secondary/30 rounded-custom">
       {/* header */}
       <div className="flex flex-col gap-1 p-4 border-b border-border">
         <h1 className="text-lg font-semibold">Open Issues</h1>
@@ -24,29 +23,35 @@ function RepositoryIssues({ issues }: RepositoryIssuesProps) {
         </p>
       </div>
 
-      {issues.map((issue) => (
+      {issues.map((issue, index) => (
         <div
-          key={issue.id}
+          key={index}
           className="flex flex-col gap-2 p-4 border-b border-border hover:bg-secondary/50"
         >
-          <Link href="/" className="hover:text-accent hover:underline">
+          <Link
+            href={issue.issuesUrl}
+            target="_blank"
+            className="hover:text-accent hover:underline text-wrap w-full"
+          >
             {issue.title}
           </Link>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             {issue.labels.map((label) => (
-              <RepositoryTag key={label} tag={label} />
+              <RepositoryTag key={label.name} tag={label.name} />
             ))}
           </div>
-          <p className="text-xs text-muted-foreground">{issue.createdAt}</p>
+          <p className="text-xs text-muted-foreground">2 days ago</p>
         </div>
       ))}
 
       {/* footer */}
       <div className="p-4 ">
-        <Button variant="outline" size="sm">
-          View All Issues
-        </Button>
+        <Link href={`${githubLink}/issues`} target="_blank">
+          <Button variant="outline" size="sm">
+            View All Issues
+          </Button>
+        </Link>
       </div>
     </section>
   );

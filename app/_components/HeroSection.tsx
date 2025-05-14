@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 function HeroSection() {
   return (
@@ -15,16 +16,23 @@ function HeroSection() {
             community. Find projects that match your skills and interests.
           </p>
           <div className="flex gap-3 items-center">
-            <Button size="lg" className="rounded-full animate-fade-in-delay-1">
-              Start Exploring
-            </Button>
-            <Button
-              size="lg"
-              className="rounded-full animate-fade-in-delay-2"
-              variant="outline"
-            >
-              Join Community
-            </Button>
+            <Link href="/explore">
+              <Button
+                size="lg"
+                className="rounded-full animate-fade-in-delay-1"
+              >
+                Start Exploring
+              </Button>
+            </Link>
+            <Link href="/register">
+              <Button
+                size="lg"
+                className="rounded-full animate-fade-in-delay-2"
+                variant="outline"
+              >
+                Join Community
+              </Button>
+            </Link>
           </div>
         </div>
         <div className="hidden md:flex items-center justify-center ">
@@ -32,8 +40,8 @@ function HeroSection() {
           <Image
             src={"/hero-section1.svg"}
             alt="programmer"
-            width={300}
-            height={300}
+            width={350}
+            height={350}
           />
         </div>
       </div>

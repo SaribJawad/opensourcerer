@@ -4,7 +4,7 @@ import { ScrollArea } from "@/app/_components/ui/scroll-area";
 
 interface IFilterByLanguageSectionProps {
   handleFilterByLanguages: (lang: string) => void;
-  filterLanguages: string[];
+  filterLanguages: string | undefined;
 }
 
 function FilterByLanguageSection({
@@ -33,7 +33,7 @@ function FilterByLanguageSection({
             <div key={lang} className="flex items-center space-x-2">
               <Checkbox
                 id={lang}
-                checked={filterLanguages.includes(lang)}
+                checked={filterLanguages === lang}
                 onCheckedChange={() => handleFilterByLanguages(lang)}
               />
               <Label

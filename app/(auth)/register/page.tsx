@@ -5,6 +5,12 @@ import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import RegisterForm from "./_components/RegisterForm";
 import RegisterOauthButtons from "./_components/RegisterOauthButtons";
 
+export const metadata = {
+  title: "Register | Opensourcerer",
+  description:
+    "Create an account to start discovering and saving repositories.",
+};
+
 function page() {
   return (
     <section className="bg-background   h-dvh flex items-center justify-center p-4">

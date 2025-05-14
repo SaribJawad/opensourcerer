@@ -10,6 +10,9 @@ import FilterByTagSection from "./FilterByTagSection";
 import { Button } from "@/app/_components/ui/button";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import { IoClose } from "react-icons/io5";
+import toast from "react-hot-toast";
+import { useRepoStore } from "@/app/_providers/repoStoreProvider";
+import { useUserStore } from "@/app/_providers/userStoreProvider";
 
 export type SortBy = "stars" | "updated" | "issues";
 
@@ -19,9 +22,15 @@ interface IFilterSidebar {
 }
 
 function FilterSideBar({ isSideBarOpen, setIsSideBarOpen }: IFilterSidebar) {
+  const { setSearchNextPageUrl } = useUserStore((state) => state);
+  const {
+    setSearchRepoResult,
+    setIsSearchRepoResultLoading,
+    isSearchRepoResultLoading,
+  } = useRepoStore((state) => state);
   const [sortBy, setSortBy] = useState<SortBy>("stars");
   const [stars, setStars] = useState<number[]>([0]);
-  const [languages, setLanguages] = useState<string[]>([]);
+  const [language, setLanguage] = useState<string>();
   const [updatedInLast30Days, setUpdatedInLast30Days] =
     useState<boolean>(false);
   const [tags, setTags] = useState<string[]>([]);
@@ -41,11 +50,7 @@ function FilterSideBar({ isSideBarOpen, setIsSideBarOpen }: IFilterSidebar) {
   }, [isSideBarOpen]);
 
   const handleFilterByLanguage = (language: string) => {
-    setLanguages((prev) =>
-      prev.includes(language)
-        ? [...prev.filter((lang) => lang === language)]
-        : [...prev, language]
-    );
+    setLanguage(language);
   };
 
   const handleFilterByTags = (tag: string) => {
@@ -57,22 +62,46 @@ function FilterSideBar({ isSideBarOpen, setIsSideBarOpen }: IFilterSidebar) {
   const handleReset = () => {
     setSortBy("stars");
     setStars([0]);
-    setLanguages([]);
+    setLanguage(undefined);
     setUpdatedInLast30Days(false);
     setTags([]);
   };
 
-  const handleApplyFilters = () => {
-    const formData = new FormData();
+  const handleApplyFilters = async () => {
+    if (!language) {
+      toast.error("Select a language");
+      return;
+    }
+    const body = {
+      sortBy,
+      stars: stars[0],
+      language: language,
+      updatedInLast30Days,
+      tags,
+    };
+    try {
+      setIsSearchRepoResultLoading(true);
+      setSearchRepoResult(null);
+      const response = await fetch("/api/github/search", {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
 
-    formData.append("sortBy", sortBy);
-    formData.append("stars", JSON.stringify(stars));
-    formData.append("languages", JSON.stringify(languages));
-    formData.append("updatedInLast30Days", JSON.stringify(updatedInLast30Days));
-    formData.append("tags", JSON.stringify(tags));
+      const data = await response.json();
 
-    for (const [key, value] of formData) {
-      console.log(`${key} : ${value}`);
+      setSearchNextPageUrl(data.nextUrl);
+
+      setSearchRepoResult(data.data);
+    } catch (error) {
+      let errorMessage = "Something went wrong! Try again";
+
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
+      throw new Error(errorMessage);
+    } finally {
+      setIsSearchRepoResultLoading(false);
     }
   };
 
@@ -121,7 +150,7 @@ function FilterSideBar({ isSideBarOpen, setIsSideBarOpen }: IFilterSidebar) {
             />
             <Separator className="" />
             <FilterByLanguageSection
-              filterLanguages={languages}
+              filterLanguages={language}
               handleFilterByLanguages={handleFilterByLanguage}
             />
             <Separator className="" />
@@ -134,8 +163,17 @@ function FilterSideBar({ isSideBarOpen, setIsSideBarOpen }: IFilterSidebar) {
         </ScrollArea>
 
         <div className="w-full flex flex-col gap-2 shrink-0 p-3">
-          <Button onClick={handleApplyFilters}>Apply Filters</Button>
-          <Button variant="outline" onClick={handleReset}>
+          <Button
+            disabled={isSearchRepoResultLoading}
+            onClick={handleApplyFilters}
+          >
+            {isSearchRepoResultLoading ? "Searching..." : "Filter Search"}
+          </Button>
+          <Button
+            disabled={isSearchRepoResultLoading}
+            variant="outline"
+            onClick={handleReset}
+          >
             Reset
           </Button>
         </div>

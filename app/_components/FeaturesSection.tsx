@@ -2,6 +2,18 @@ import { BiMessageSquareDetail } from "react-icons/bi";
 import { FaSearch } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 
+
+
+
+
+
+
+
+
+
+
+
+
 function FeaturesSection() {
   const features = [
     {

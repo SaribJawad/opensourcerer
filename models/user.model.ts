@@ -9,7 +9,8 @@ interface IUser extends Document {
   provider: "credentials" | "github" | "google";
   joinedOn: string;
   profileImage?: string;
-  bookmarkedRepos?: string[];
+  bookmarkedRepos: Types.ObjectId[];
+
   bio?: string;
   isPasswordCorrect: (inpPassword: string) => Promise<boolean>;
 }
@@ -45,8 +46,8 @@ const UserModel = new Schema<IUser>({
   },
   bookmarkedRepos: [
     {
-      type: String,
-      default: [],
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "BookmarkRepo",
     },
   ],
 });

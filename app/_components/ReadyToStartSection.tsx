@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "./ui/button";
 
 function ReadyToStartSection() {
@@ -12,20 +13,24 @@ function ReadyToStartSection() {
           </p>
         </div>
         <div className="flex items-center gap-5 p-3 ">
-          <Button
-            variant="secondary"
-            size="default"
-            className="rounded-full bg-accent-foreground text-accent"
-          >
-            Create Free Account
-          </Button>
-          <Button
-            variant="outline"
-            size="default"
-            className="rounded-full border border-white"
-          >
-            Browse Projects
-          </Button>
+          <Link href="/register">
+            <Button
+              variant="secondary"
+              size="default"
+              className="rounded-full bg-accent-foreground text-accent"
+            >
+              Create Free Account
+            </Button>
+          </Link>
+          <Link href="/explore">
+            <Button
+              variant="outline"
+              size="default"
+              className="rounded-full border border-white"
+            >
+              Browse Projects
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

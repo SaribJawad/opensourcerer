@@ -137,7 +137,9 @@ function Header() {
                     </Button>
                   </Link>
                   <Link href="/dashboard">
-                    <Button variant="outline">Dashboard</Button>
+                    <Button variant="outline" className="w-full">
+                      Dashboard
+                    </Button>
                   </Link>
                 </div>
                 {!user && (

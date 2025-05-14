@@ -19,7 +19,9 @@ export async function POST(request: NextRequest) {
   const parsedBody = RegisterBody.safeParse(body);
 
   if (!parsedBody.success) {
-    const errors = parsedBody.error.errors.map((err) => err.message).join(" |");
+    const errors = parsedBody.error.errors
+      .map((err) => err.message)
+      .join(" |");
 
     throw new Error(errors);
   }
@@ -33,7 +35,7 @@ export async function POST(request: NextRequest) {
       JSON.stringify({
         message: "An account already exists with this email.",
       }),
-      { status: 400, headers: { "Content-Type": "application/json" } }
+      { status: 400, headers: { "Content-Type": "application/json" } },
     );
   }
 
@@ -49,8 +51,10 @@ export async function POST(request: NextRequest) {
 
   if (!user) {
     return new NextResponse(
-      JSON.stringify({ error: "Something went wrong while creating the user" }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
+      JSON.stringify({
+        error: "Something went wrong while creating the user",
+      }),
+      { status: 500, headers: { "Content-Type": "application/json" } },
     );
   }
 
@@ -61,6 +65,6 @@ export async function POST(request: NextRequest) {
     {
       status: 201,
       headers: { "Content-Type": "application/json" },
-    }
+    },
   );
 }

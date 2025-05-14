@@ -1,43 +1,38 @@
+"use client";
+
 import Link from "next/link";
 import { GoArrowUpRight } from "react-icons/go";
 import RepositoryCard from "./RepositoryCard";
+import { useEffect } from "react";
+import { useRepoStore } from "../_providers/repoStoreProvider";
+import toast from "react-hot-toast";
+import { SkeletonRepositoryCard } from "./SkeletonRepositoryCard";
 
 function TrendingSection() {
-  const trendingRepos = [
-    {
-      id: "1",
-      image: "/logo.svg",
-      repoName: "vercel/next.js",
-      desc: "The React Framework for the Web",
-      tags: ["Typescript", "React", "Rust"],
-      stars: 108945,
-      forks: 23000,
-      issues: 12300,
-      updated: 2,
-    },
-    {
-      id: "2",
-      image: "/logo.svg",
-      repoName: "facebook/react",
-      desc: "A declarative, efficient, and flexible JavaScript library for building user interfaces.",
-      tags: ["library", "javascript", "ui"],
-      stars: 207528,
-      forks: 49123,
-      issues: 1002,
-      updated: 1,
-    },
-    {
-      image: "/logo.svg",
-      id: "3",
-      repoName: "tensorflow/tensorflow",
-      desc: "An open source machine learning framework for everyone",
-      tags: ["machine-learning", "ai", "data-science"],
-      stars: 108945,
-      forks: 23000,
-      issues: 12300,
-      updated: 3,
-    },
-  ];
+  const {
+    setIsTrendingReposLoading,
+    isTrendingReposLoading,
+    trendingRepos,
+    setTrendingRepos,
+  } = useRepoStore((state) => state);
+
+  useEffect(() => {
+    const fetchTrendingRepos = async () => {
+      try {
+        const response = await fetch("/api/github/trending-repos");
+        const data = await response.json();
+
+        setTrendingRepos(data.data);
+      } catch (error) {
+        console.error("Fetching trending repos failed:", error);
+        toast.error("Something went wrong while fetching trending repos");
+      } finally {
+        setIsTrendingReposLoading(false);
+      }
+    };
+
+    fetchTrendingRepos();
+  }, [setTrendingRepos, setIsTrendingReposLoading]);
 
   return (
     <section className="w-full p-5">
@@ -47,7 +42,8 @@ function TrendingSection() {
             Trending <span className="text-accent">Projects</span>
           </h1>
           <Link
-            href="/"
+            href="https://github.com/trending"
+            target="_blank"
             className="text-accent flex items-center gap-1 hover:underline hover:text-accent/90 color-hover md:text-base text-sm"
           >
             View all
@@ -55,9 +51,13 @@ function TrendingSection() {
           </Link>
         </div>
         <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8">
-          {trendingRepos.map((repo, index) => (
-            <RepositoryCard key={index} {...repo} />
-          ))}
+          {isTrendingReposLoading
+            ? Array.from({ length: 3 }).map((_, index) => (
+                <SkeletonRepositoryCard key={index + 1} />
+              ))
+            : trendingRepos.map((repo, index) => (
+                <RepositoryCard key={index} {...repo} />
+              ))}
         </div>
       </div>
     </section>

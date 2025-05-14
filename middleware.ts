@@ -9,18 +9,18 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  const publicRoutes = ["/", "/explore"];
+  const publicRoutes =
+    pathname === "/" ||
+    pathname === "/explore" ||
+    pathname.startsWith("/repository/");
+
   const authRoutes = ["/login", "/register"];
 
   if (token && authRoutes.includes(pathname)) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  if (
-    !token &&
-    !publicRoutes.includes(pathname) &&
-    !authRoutes.includes(pathname)
-  ) {
+  if (!token && !publicRoutes && !authRoutes.includes(pathname)) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 

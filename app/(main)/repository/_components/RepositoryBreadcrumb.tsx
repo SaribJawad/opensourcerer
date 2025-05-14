@@ -1,11 +1,11 @@
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/app/_components/ui/breadcrumb";
+import Link from "next/link";
 
 interface IRepositoryBreadcrumb {
   projName: string;
@@ -17,7 +17,7 @@ function RepositoryBreadcrumb({ projName, projOwner }: IRepositoryBreadcrumb) {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/explore">Explore</BreadcrumbLink>
+          <Link href="/explore">Explore</Link>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
 

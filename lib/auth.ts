@@ -26,7 +26,9 @@ export const authOptions: NextAuthOptions = {
         try {
           await connectDB();
 
-          const user = await User.findOne({ email: credentials.email });
+          const user = await User.findOne({
+            email: credentials.email,
+          });
 
           if (!user) {
             throw new Error(
@@ -86,7 +88,9 @@ export const authOptions: NextAuthOptions = {
         if (!existingUser) {
           try {
             const date = new Date();
-            const month = date.toLocaleString("default", { month: "long" });
+            const month = date.toLocaleString("default", {
+              month: "long",
+            });
             const joinedOn = `${month} / ${date.getFullYear()}`;
 
             await User.create({
@@ -110,7 +114,9 @@ export const authOptions: NextAuthOptions = {
         if (!existingUser) {
           try {
             const date = new Date();
-            const month = date.toLocaleString("default", { month: "long" });
+            const month = date.toLocaleString("default", {
+              month: "long",
+            });
             const joinedOn = `${month} / ${date.getFullYear()}`;
 
             const githubProfile = profile as { bio: string };

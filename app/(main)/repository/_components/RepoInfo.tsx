@@ -1,5 +1,4 @@
 import RepositoryTag from "@/app/_components/RepositoryTag";
-import { FaRegFileAlt } from "react-icons/fa";
 import {
   MdAccessTime,
   MdErrorOutline,
@@ -7,39 +6,37 @@ import {
 } from "react-icons/md";
 import { PiGitForkLight } from "react-icons/pi";
 
-function RepoInfo() {
+interface RepoInfoProps {
+  stars: string;
+  forks: string;
+  errors: string;
+  updatedAt: string;
+}
+
+function RepoInfo({ errors, forks, stars, updatedAt }: RepoInfoProps) {
   return (
     <div className="flex items-center flex-wrap gap-8 md:text-sm text-xs font-light">
       <RepositoryTag tag="Typescript" />
       {/*stars */}
       <span className="flex items-center gap-1">
         <MdOutlineStarBorder />
-        {/* {props.stars.toLocaleString()} */}
-        12,212
+        {stars}
       </span>
       {/* forks */}
       <span className="flex items-center gap-1">
         <PiGitForkLight />
-        {/* {props.forks.toLocaleString()} */}
-        12,353
+        {forks}
       </span>
       {/* issues */}
       <span className="flex items-center gap-1">
         <MdErrorOutline />
-        {/* {props.forks.toLocaleString()} */}
-        12,353
+        {errors}
       </span>
-      {/* MIT */}
-      <span className="flex items-center gap-1">
-        <FaRegFileAlt />
-        {/* {props.forks.toLocaleString()} */}
-        MIT license
-      </span>
+
       {/* updated at */}
       <span className="flex items-center gap-1">
         <MdAccessTime />
-        {/* {props.forks.toLocaleString()} */}
-        Updated 2 days ago
+        {updatedAt}
       </span>
     </div>
   );

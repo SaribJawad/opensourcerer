@@ -34,12 +34,12 @@ export const UserStoreProvider = ({ children }: IUserStoreProviderProps) => {
 
           const user = await getUser();
 
-          store.getState().setUser(user.user);
-
           if (!user) {
-            console.log("user not found");
             store.getState().setUser(null);
+            return;
           }
+
+          store.getState().setUser(user.user);
         } catch (error) {
           console.error("Error fetching user data:", error);
         } finally {
@@ -57,7 +57,7 @@ export const UserStoreProvider = ({ children }: IUserStoreProviderProps) => {
   }, [status, store]);
 
   return (
-    <UserStoreContext.Provider value={storeRef.current}>
+    <UserStoreContext.Provider value={store}>
       {children}
     </UserStoreContext.Provider>
   );
