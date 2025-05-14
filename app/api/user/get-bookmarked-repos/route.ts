@@ -1,10 +1,12 @@
 import { authOptions } from "@/lib/auth";
 import { BookmarkRepo } from "@/models/bookmarkRepo.model";
 import { User } from "@/models/user.model";
+import connectDB from "@/utils/connectDB";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function GET() {
+  connectDB();
   const session = await getServerSession(authOptions);
 
   if (!session) {
