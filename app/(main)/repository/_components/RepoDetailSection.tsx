@@ -49,6 +49,7 @@ function RepoDetailSection() {
           link={detailedRepo.githubLink}
         />
         <RepoInfo
+          language={detailedRepo.language}
           errors={detailedRepo.totalIssues}
           forks={detailedRepo.forks}
           stars={detailedRepo.stars}

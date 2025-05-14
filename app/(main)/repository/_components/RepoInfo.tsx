@@ -10,13 +10,20 @@ interface RepoInfoProps {
   stars: string;
   forks: string;
   errors: string;
+  language: string | null;
   updatedAt: string;
 }
 
-function RepoInfo({ errors, forks, stars, updatedAt }: RepoInfoProps) {
+function RepoInfo({
+  errors,
+  forks,
+  stars,
+  updatedAt,
+  language,
+}: RepoInfoProps) {
   return (
     <div className="flex items-center flex-wrap gap-8 md:text-sm text-xs font-light">
-      <RepositoryTag tag="Typescript" />
+      {language && <RepositoryTag tag={language} />}
       {/*stars */}
       <span className="flex items-center gap-1">
         <MdOutlineStarBorder />
