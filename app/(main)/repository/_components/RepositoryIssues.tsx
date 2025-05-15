@@ -1,7 +1,6 @@
 import RepositoryTag from "@/app/_components/RepositoryTag";
 import { Button } from "@/app/_components/ui/button";
 import Link from "next/link";
-import EmptySection from "../../dashboard/_components/EmptySection";
 
 interface RepositoryIssuesProps {
   githubLink: string;
