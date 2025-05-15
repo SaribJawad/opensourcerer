@@ -9,6 +9,7 @@ import { IoClose } from "react-icons/io5";
 import Link from "next/link";
 import { useUserStore } from "../_providers/userStoreProvider";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import {
   DropdownMenu,
@@ -22,9 +23,15 @@ import { signOut } from "next-auth/react";
 
 function Header() {
   const user = useUserStore((state) => state.user);
+  const router = useRouter();
 
   const [isMobileNavOpen, setIsMobileNavOpen] = useState<boolean>(false);
   const [isNavVisible, setIsNavVisible] = useState<boolean>(false);
+
+  const handleMobNav = (url: string) => {
+    router.push(url);
+    setIsNavVisible(false);
+  };
 
   useEffect(() => {
     if (isMobileNavOpen) {
@@ -131,21 +138,29 @@ function Header() {
               </div>
               <div className="flex flex-col gap-5 justify-between flex-1">
                 <div className="flex flex-col gap-5">
-                  <Link href="/explore" className="">
-                    <Button variant="outline" className="w-full">
-                      Explore
-                    </Button>
-                  </Link>
-                  <Link href="/dashboard">
-                    <Button variant="outline" className="w-full">
-                      Dashboard
-                    </Button>
-                  </Link>
+                  <Button
+                    onClick={() => handleMobNav("/explore")}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    Explore
+                  </Button>
+
+                  <Button
+                    onClick={() => handleMobNav("/dashboard")}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    Dashboard
+                  </Button>
                 </div>
                 {!user && (
-                  <Link href="/register">
-                    <Button className="">Register</Button>
-                  </Link>
+                  <Button
+                    onClick={() => handleMobNav("/register")}
+                    className=""
+                  >
+                    Register
+                  </Button>
                 )}
               </div>
             </div>

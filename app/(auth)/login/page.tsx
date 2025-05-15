@@ -14,10 +14,12 @@ function page() {
   return (
     <section className="bg-background   h-dvh flex items-center justify-center p-4">
       <div className=" max-w-[420px] w-full  flex flex-col gap-10  items-center">
-        <div className="flex items-center gap-1 text-sm text-muted-foreground hover:text-accent w-fit">
-          <MdOutlineKeyboardArrowLeft size={20} />
-          <Link href="/">Back to home</Link>
-        </div>
+        <Link href="/">
+          <div className="flex items-center gap-1 text-sm text-muted-foreground hover:text-accent w-fit">
+            <MdOutlineKeyboardArrowLeft size={20} />
+            Back to home
+          </div>
+        </Link>
         <Logo />
         <div className="flex flex-col items-center gap-3 justify-center text-center">
           <h1 className="text-3xl font-semibold">Welcome Back</h1>
